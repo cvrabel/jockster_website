@@ -1,6 +1,8 @@
 <!DOCTYPE html>
 <html>
 <head>
+	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
+	<meta content="utf-8" http-equiv="encoding">
 	<title>Jockster - Your sports</title>
 	<h2>See stats for teams</h2>
 	<link href='style.css' rel='stylesheet'>
@@ -8,12 +10,13 @@
 </head>
 	
 <body>
-	<input type="text" id="team">
-	<input type='button' onclick='addTeam()' value='Add Team' />
+	<!-- <input type="text" id="team"> -->
+	<input type='button' onclick='addTeam()' value='See Teams' />
     <h3>Teams:</h3>
-	<ol id = "teams"></ol>
+    <div id = 'addTeam'> Nothing for Now</div>
 	
 	
-      <script src="script.js" type ="text/javascript"></script>
+    <script src="script.js" type ="text/javascript"></script>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.1/jquery.min.js"></script>
 </body>
 </html>

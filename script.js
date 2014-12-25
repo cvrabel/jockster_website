@@ -1,28 +1,16 @@
-var main = function() {
-	
-}        
-var list = document.getElementById('teams');
 function addTeam() {
-	var team = document.getElementById('team').value;
-	var spaceLocation = team.indexOf(" ");
-	if(spaceLocation == -1){
-		alert("Please enter City and Nickname.");
-	}
-	else
-	{
-	var team_id = team.substring(0,spaceLocation) + "_" + team.substring(spaceLocation+1, team.length);
-	//document.getElementById("team").innerHTML = team_id;
-	var entry = document.createElement('li');
-	entry.appendChild(document.createTextNode(team_id));
-	list.appendChild(entry);
-    }
-    
-	var url = "https://erikberg.com/nba/roster/" + team_id;
-	$.getJSON("https://graph.facebook.com/btaylor", function(items){
-		$.each(items, function(key, value){
-			document.getElementById("json").innerHTML = key+": "+value+"<br />";
-		});
-	});
-    
+    var myurl = "https://erikberg.com/nba/teams.json";
+    $.ajax(({
+        url: myurl,
+        dataType: 'jsonp',
+        success: 
+        function (data) {
+            console.log(data);
+            var teamlist = [];
+            for (var elem in data){
+                console.log(elem.full_name);
+                teamlist.push(elem.full_name);
+            }
+        }
+    }));
 }
-$(document).ready(main);
