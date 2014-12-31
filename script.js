@@ -1,6 +1,6 @@
 
 function addTeam(){
-    alert('working');
+    //alert('working');
 $.ajax({
   url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent('http://nba.com/rss/nba_rss.xml'),
   dataType : 'jsonp',
@@ -13,7 +13,7 @@ $.ajax({
         console.log("description: " + e.description);
 
 
-        $("ol").append('<li><a href="'  +e.link+  '">'  +e.title+  '</a></li>');
+        $("ol").append('<li><a href="'  +e.link+  '" target="_blank">'  +e.title+  '</a></li>');
 
       });
     
