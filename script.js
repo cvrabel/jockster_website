@@ -11,6 +11,10 @@ $.ajax({
         console.log("title      : " + e.title);
         console.log("link     : " + e.link);
         console.log("description: " + e.description);
+
+
+        $("ol").append('<li><a href="'  +e.link+  '">'  +e.title+  '</a></li>');
+
       });
     
   }
