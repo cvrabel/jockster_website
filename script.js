@@ -23,14 +23,14 @@ function addTeam(){
                 var tempDict = {"title":e.title, "link":e.link, "pubDate":e.pubDate};
                 articles.push(tempDict);
                 console.log(articles.length);
-                
+
 
               });
                 if(articles.length == 59){
                     console.log(articles.length);
 
                     for(var k = 0; k<articles.length; k++){
-                        $("ol").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></li>');
+                        $("dl").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt>');
                     }
                 }
           }
