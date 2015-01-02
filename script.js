@@ -3,10 +3,13 @@ var urls = ['http://nba.com/rss/nba_rss.xml', 'http://sports.espn.go.com/espn/rs
 
  
 var articles = [];
-
+var check;
 function addTeam(){
 
+
+
     for(var x = 0; x < urls.length; x++){
+        check = 0;
         $.ajax({  
           url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
           dataType : 'jsonp',
@@ -16,23 +19,23 @@ function addTeam(){
                 console.log("------------------------");
                 console.log("title      : " + e.title);
                 console.log("link     : " + e.link);
-                //console.log("description: " + e.description);
+                
 
-
-                //$("ol").append('<li><a href="'  +e.link+  '" target="_blank">'  +e.title+  '</a></li>');
-                var tempDict = {"title":e.title, "link":e.link, "pubDate":e.pubDate};
-                articles.push(tempDict);
+                articles.push({"title":e.title, "link":e.link, "pubDate":$(this).find("pubDate").text()});
                 console.log(articles.length);
-
+                check++;
 
               });
-                if(articles.length == 59){
+
+              if(x == urls.length && check == data.responseData.feed.entries.length){
                     console.log(articles.length);
+                    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX')
 
                     for(var k = 0; k<articles.length; k++){
-                        $("dl").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt>');
+                        $("ol").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p>'  +articles[k].pubDate+  '</p></li>');
                     }
                 }
+              
           }
 
         });
