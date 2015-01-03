@@ -34,10 +34,8 @@ var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://sports.espn.go.c
 var articles = [];
 var check;
 
+//function to parse url pages and then display them
 function addArticles(urls){
-
-
-
         for(var x = 0; x < urls.length; x++){
             $.ajax({  
               url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
@@ -49,7 +47,7 @@ function addArticles(urls){
                     console.log("------------------------");
                     console.log("title      : " + e.title);
                     console.log("link       : " + e.link);
-                    console.log("pubDate    : " + e.pubDate);
+                    console.log("pubDate    : " + e.date);
 
                     articles.push({"title":e.title, "link":e.link, "pubDate":e.pubDate});
                     console.log(articles.length);
@@ -61,7 +59,7 @@ function addArticles(urls){
                         console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 
                         for(var k = 0; k<articles.length; k++){
-                            $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p>'  +articles[k].pubDate+  '</p></li>');
+                            $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></p></li>');
                         }
                     }
                   
@@ -72,8 +70,15 @@ function addArticles(urls){
 }
 
 
+
+
+//on page load NBA articles are shown
 window.onload = addArticles(sites["nba"]);
 
+
+
+
+//when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
     articles = [];
     $(".list").empty();
