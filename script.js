@@ -1,84 +1,82 @@
-var nba = ['http://nba.com/rss/nba_rss.xml', 'http://sports.espn.go.com/espn/rss/nba/news', 'https://sports.yahoo.com/nba/rss.xml', 
-            'http://dimemag.com/feed/', 'http://www.cbssports.com/partners/feeds/rss/nba_news', 'http://basketball.realgm.com/rss/wiretap/15/0.xml'];
+var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://sports.espn.go.com/espn/rss/nba/news", "https://sports.yahoo.com/nba/rss.xml", "http://dimemag.com/feed/", "http://www.cbssports.com/partners/feeds/rss/nba_news", "http://basketball.realgm.com/rss/wiretap/0/0.xml"],
+             "hawks" : ["http://www.nba.com/hawks/rss.xml"],
+            "celtics" : ["http://www.nba.com/celtics/rss.xml"],
+            "nets" : ["http://www.nba.com/nets/rss.xml"],
+            "hornets" : ["http://www.nba.com/hornets/rss.xml"],
+            "bulls" : ["http://www.nba.com/bulls/rss.xml"],
+            "cavs" : ["http://www.nba.com/cavaliers/rss.xml"],
+            "mavs" : ["http://www.nba.com/mavericks/rss.xml"],
+            "nuggets" : ["http://www.nba.com/nuggets/rss.xml"],
+            "pistons" : ["http://www.nba.com/pistons/rss.xml"],
+            "warriors" : ["http://www.nba.com/warriors/rss.xml"],
+            "rockets" : ["http://www.nba.com/rockets/rss.xml"],
+            "pacers" : ["http://www.nba.com/pacers/rss.xml"],
+            "clippers" : ["http://www.nba.com/clippers/rss.xml"],
+            "lakers" : ["http://www.nba.com/lakers/rss.xml"],
+            "grizzlies" : ["http://www.nba.com/grizzlies/rss.xml"],
+            "heat" : ["http://www.nba.com/heat/rss.xml"],
+            "bucks" : ["http://www.nba.com/bucks/rss.xml"],
+            "wolves" : ["http://www.nba.com/timberwolves/rss.xml"],
+            "pelicans" : ["http://www.nba.com/pelicans/rss.xml"],
+            "knicks" : ["http://www.nba.com/knicks/rss.xml"],
+            "thunder" : ["http://www.nba.com/thunder/rss.xml"],
+            "magic" : ["http://www.nba.com/magic/rss.xml"],
+            "sixers" : ["http://www.nba.com/sixers/rss.xml"],
+            "suns" : ["http://www.nba.com/suns/rss.xml"],
+            "blazers" : ["http://www.nba.com/blazers/rss.xml"],
+            "kings" : ["http://www.nba.com/kings/rss.xml"],
+            "spurs" : ["http://www.nba.com/spurs/rss.xml"],
+            "raptors" : ["http://www.nba.com/raptors/rss.xml"],
+            "jazz" : ["http://www.nba.com/jazz/rss.xml"],
+            "wizards" : ["http://www.nba.com/wizards/rss.xml"]
+            };
 
-var hawks = ['http://www.nba.com/hawks/rss.xml'];
-var celtics = ['http://www.nba.com/celtics/rss.xml'];
-var nets = [];
-var hornets = [];
-var bulls = [];
-var cavs =[];
-var mavs = [];
-var nuggets = [];
-var pistons = [];
-var warriors = [];
-var rockets = [];
-var pacers = [];
-var clippers = [];
-var lakers = [];
-var grizzlies = [];
-var heat = [];
-var bucks = [];
-var wolves = [];
-var pelicans = [];
-var knicks = [];
-var thunder = [];
-var magic = [];
-var sixers = [];
-var suns = [];
-var blazers = [];
-var kings = [];
-var spurs = [];
-var raptors = [];
-var jazz = [];
-var wizards = [];
- 
 var articles = [];
 var check;
+
 function addArticles(urls){
 
 
 
-    for(var x = 0; x < urls.length; x++){
-        $.ajax({  
-          url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
-          dataType : 'jsonp',
-          success  : function (data) {
-              //$("ol").append('<h4>NBA.com</h4>');
-              $.each(data.responseData.feed.entries, function (i, e) {
-                
-                console.log("------------------------");
-                console.log("title      : " + e.title);
-                console.log("link       : " + e.link);
-                console.log("pubDate    : " + e.pubDate);
+        for(var x = 0; x < urls.length; x++){
+            $.ajax({  
+              url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
+              dataType : 'jsonp',
+              success  : function (data) {
+                  //$("ol").append('<h4>NBA.com</h4>');
+                  $.each(data.responseData.feed.entries, function (i, e) {
+                    
+                    console.log("------------------------");
+                    console.log("title      : " + e.title);
+                    console.log("link       : " + e.link);
+                    console.log("pubDate    : " + e.pubDate);
 
-                articles.push({"title":e.title, "link":e.link, "pubDate":e.pubDate});
-                console.log(articles.length);
-
-              });
-
-              if(x == urls.length ){
+                    articles.push({"title":e.title, "link":e.link, "pubDate":e.pubDate});
                     console.log(articles.length);
-                    console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
 
-                    for(var k = 0; k<articles.length; k++){
-                        $("ol").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p>'  +articles[k].pubDate+  '</p></li>');
+                  });
+
+                  if(x == urls.length ){
+                        console.log(articles.length);
+                        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
+
+                        for(var k = 0; k<articles.length; k++){
+                            $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p>'  +articles[k].pubDate+  '</p></li>');
+                        }
                     }
-                }
-              
-          }
+                  
+              }
 
-        });
-    }
-    
-
+            });
+        }
 }
 
-window.onload = addArticles(nba);
+
+window.onload = addArticles(sites["nba"]);
 
 document.getElementById("teams").onchange = function() {
     articles = [];
-    $("list").empty();
-    addArticles(this.value);
-    return false;
+    $(".list").empty();
+    addArticles(sites[this.value]);
 };
 
