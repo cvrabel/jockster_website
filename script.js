@@ -32,11 +32,12 @@ var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://sports.espn.go.c
             };
 
 var articles = [];
-var check;
-
+var tempLength = 0;
+var counter = 0;
 //function to parse url pages and then display them
 function addArticles(urls){
         for(var x = 0; x < urls.length; x++){
+            
             $.ajax({  
               url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
               dataType : 'jsonp',
@@ -51,21 +52,17 @@ function addArticles(urls){
 
                     articles.push({"title":e.title, "link":e.link, "pubDate":e.pubDate});
                     console.log(articles.length);
-
+                    counter++;
                   });
 
-                  if(x == urls.length ){
-                        console.log(articles.length);
-                        console.log('XXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXXX');
-
-                        for(var k = 0; k<articles.length; k++){
-                            $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></p></li>');
-                        }
+                  //displaying the articles
+                  for(var k = tempLength; k<articles.length; k++){
+                        $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></p></li>');
                     }
-                  
+                  tempLength = counter;                  
               }
-
             });
+
         }
 }
 
@@ -80,6 +77,8 @@ window.onload = addArticles(sites["nba"]);
 
 //when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
+    tempLength = 0;
+    counter = 0;
     articles = [];
     $(".list").empty();
     addArticles(sites[this.value]);
