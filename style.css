@@ -8,6 +8,12 @@
 h1 {
 	color:darkblue;
 	text-align: center;
+	font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
+	font-size: 35px;
+	font-style: normal;
+	font-variant: small-caps;
+	font-weight: 500;
+	line-height: 15px;
 }
 /*.center {
     margin-left: auto;

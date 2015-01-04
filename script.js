@@ -1,4 +1,4 @@
-var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://sports.espn.go.com/espn/rss/nba/news", "https://sports.yahoo.com/nba/rss.xml", "http://dimemag.com/feed/", "http://www.cbssports.com/partners/feeds/rss/nba_news", "http://basketball.realgm.com/rss/wiretap/0/0.xml"],
+var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://www.si.com/rss/si_nba.rss", "http://sports.espn.go.com/espn/rss/nba/news", "https://sports.yahoo.com/nba/rss.xml", "http://dimemag.com/feed/", "http://www.cbssports.com/partners/feeds/rss/nba_news", "http://basketball.realgm.com/rss/wiretap/0/0.xml"],
              "hawks" : ["http://www.nba.com/hawks/rss.xml"],
             "celtics" : ["http://www.nba.com/celtics/rss.xml"],
             "nets" : ["http://www.nba.com/nets/rss.xml"],
@@ -34,6 +34,7 @@ var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://sports.espn.go.c
 var articles = [];
 var tempLength = 0;
 var counter = 0;
+
 //function to parse url pages and then display them
 function addArticles(urls){
         for(var x = 0; x < urls.length; x++){
@@ -48,16 +49,16 @@ function addArticles(urls){
                     console.log("------------------------");
                     console.log("title      : " + e.title);
                     console.log("link       : " + e.link);
-                    console.log("pubDate    : " + e.date);
-
-                    articles.push({"title":e.title, "link":e.link, "pubDate":e.pubDate});
+                    console.log("pubDate    : " + e.publishedDate);
+                    console.log("description: " + e.contentSnippet);
+                    articles.push({"title":e.title, "link":e.link, "pubDate":e.publishedDate});
                     console.log(articles.length);
                     counter++;
                   });
 
                   //displaying the articles
                   for(var k = tempLength; k<articles.length; k++){
-                        $(".list").append('<li><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></p></li>');
+                        $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></dd>');
                     }
                   tempLength = counter;                  
               }
