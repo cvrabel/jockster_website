@@ -37,11 +37,11 @@ var counter = 0;
 
 //function to parse url pages and then display them
 function addArticles(urls){
-        for(var x = 0; x < urls.length; x++){
-            
+        for(var x = 0; x < urls.length; x++){            
             $.ajax({  
               url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
               dataType : 'jsonp',
+              async: false, 
               success  : function (data) {
                   //$("ol").append('<h4>NBA.com</h4>');
                   $.each(data.responseData.feed.entries, function (i, e) {
@@ -51,11 +51,21 @@ function addArticles(urls){
                     console.log("link       : " + e.link);
                     console.log("pubDate    : " + e.publishedDate);
                     console.log("description: " + e.contentSnippet);
-                    articles.push({"title":e.title, "link":e.link, "pubDate":e.publishedDate});
+                    if((e.link.indexOf("chinese") == -1) && (e.link.indexOf("china") == -1) && (e.link.indexOf("espanol")==-1))
+                        articles.push({"title":e.title, "link":e.link, "pubDate": Date.parse(e.publishedDate)});
                     console.log(articles.length);
                     counter++;
                   });
-
+                  //sort by date here
+                  for(var x = 0; x <articles.length; x++){
+                    for(var y = x; y > 0; y--){
+                        if(articles[y].pubDate < articles[y-1].pubDate){
+                            var temp = articles[y];
+                            articles[y] = articles[y-1];
+                            articles[y-1] = articles[y];
+                        }
+                    }
+                  }
                   //displaying the articles
                   for(var k = tempLength; k<articles.length; k++){
                         $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></dd>');
@@ -63,11 +73,8 @@ function addArticles(urls){
                   tempLength = counter;                  
               }
             });
-
         }
 }
-
-
 
 
 //on page load NBA articles are shown
@@ -84,4 +91,3 @@ document.getElementById("teams").onchange = function() {
     $(".list").empty();
     addArticles(sites[this.value]);
 };
-
