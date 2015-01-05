@@ -5,7 +5,7 @@ var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://www.si.com/rss/s
             "hornets" : ["http://www.nba.com/hornets/rss.xml"],
             "bulls" : ["http://www.nba.com/bulls/rss.xml"],
             "cavs" : ["http://www.nba.com/cavaliers/rss.xml"],
-            "mavs" : ["http://www.nba.com/mavericks/rss.xml"],
+            "mavs" : ["http://www.mavs.com/feed/"],
             "nuggets" : ["http://www.nba.com/nuggets/rss.xml"],
             "pistons" : ["http://www.nba.com/pistons/rss.xml"],
             "warriors" : ["http://www.nba.com/warriors/rss.xml"],
@@ -38,33 +38,40 @@ var counter = 0;
 //function to parse url pages and then display them
 function addArticles(urls){
         for(var x = 0; x < urls.length; x++){
-            
+            counter = 0;
             $.ajax({  
               url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
               dataType : 'jsonp',
+              async    : false,
               success  : function (data) {
                   //$("ol").append('<h4>NBA.com</h4>');
+                  counter = 0;
                   $.each(data.responseData.feed.entries, function (i, e) {
                     
                     console.log("------------------------");
                     console.log("title      : " + e.title);
                     console.log("link       : " + e.link);
-                    console.log("pubDate    : " + e.publishedDate);
+                    console.log("pubDate    : " + Date.parse(e.publishedDate));
                     console.log("description: " + e.contentSnippet);
-                    articles.push({"title":e.title, "link":e.link, "pubDate":e.publishedDate});
+                    if(e.link.indexOf("chinese") == -1 && e.link.indexOf("china") == -1 && e.link.indexOf("espanol") == -1){
+                        articles.push({"title":e.title, "link":e.link, "pubDate":Date.parse(e.publishedDate)});
+                        counter++;
+                    }
                     console.log(articles.length);
-                    counter++;
+                    
                   });
-
                   //displaying the articles
-                  for(var k = tempLength; k<articles.length; k++){
+                  if(x == urls.length && counter == data.responseData.feed.entries.length){
+                  for(var k = 0; k<articles.length; k++){
                         $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></dd>');
+                        }
                     }
                   tempLength = counter;                  
               }
             });
-
+            
         }
+
 }
 
 
