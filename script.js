@@ -31,56 +31,72 @@ var sites = {"nba" : ["http://nba.com/rss/nba_rss.xml", "http://www.si.com/rss/s
             "wizards" : ["http://www.nba.com/wizards/rss.xml"]
             };
 
-var articles = [];
+
 var tempLength = 0;
 var counter = 0;
-
+var articles = [];
 //function to parse url pages and then display them
 function addArticles(urls){
-        for(var x = 0; x < urls.length; x++){
-            counter = 0;
-            $.ajax({  
-              url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
-              dataType : 'jsonp',
-              async    : false,
-              success  : function (data) {
-                  //$("ol").append('<h4>NBA.com</h4>');
-                  counter = 0;
-                  $.each(data.responseData.feed.entries, function (i, e) {
-                    
-                    console.log("------------------------");
-                    console.log("title      : " + e.title);
-                    console.log("link       : " + e.link);
-                    console.log("pubDate    : " + Date.parse(e.publishedDate));
-                    console.log("description: " + e.contentSnippet);
-                    if(e.link.indexOf("chinese") == -1 && e.link.indexOf("china") == -1 && e.link.indexOf("espanol") == -1){
-                        articles.push({"title":e.title, "link":e.link, "pubDate":Date.parse(e.publishedDate)});
-                        counter++;
-                    }
-                    console.log(articles.length);
-                    
-                  });
-                  //displaying the articles
-                  if(x == urls.length && counter == data.responseData.feed.entries.length){
-                  for(var k = 0; k<articles.length; k++){
-                        $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></dd>');
-                        }
-                    }
-                  tempLength = counter;                  
-              }
-            });
+      var promises = [];
+    for(var x in urls){
+        var request = $.ajax({  
+          url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
+          dataType : 'jsonp',
+          success  : function (data) {
+              //$("ol").append('<h4>NBA.com</h4>');
             
-        }
+              $.each(data.responseData.feed.entries, function (i, e) {
+                
+                console.log("------------------------");
+                console.log("title      : " + e.title);
+                console.log("link       : " + e.link);
+                console.log("pubDate    : " + Date.parse(e.publishedDate));
+                console.log("description: " + e.contentSnippet);
+                if(e.link.indexOf("chinese") == -1 && e.link.indexOf("china") == -1 && e.link.indexOf("espanol") == -1){
+                    articles.push({"title":e.title, "link":e.link, "pubDate":e.publishedDate});
+                    counter++;
+                }
+                console.log(articles.length);
+              });
+              
+              //displaying the articles
+            
+                               
+          },
+        });
+        promises.push(request);
+    }  
+   $.when.apply(null, promises).done(function(){
 
+       displayArticles();
+  })
 }
 
+function displayArticles(){
 
+        //sort by date here
+          
+          for(var x = 0; x <articles.length; x++){
+            for(var y = x; y > 0; y--){
+                if(Date.parse(articles[y].pubDate) > Date.parse(articles[y-1].pubDate)){
+                    var temp = articles[y];
+                    articles[y] = articles[y-1];
+                    articles[y-1] = temp;
+                }
+            }
+          }
+        console.log("THIS IS THE NUMBER OF ARTICLES : " + articles.length);
+        for(var k = 0; k<articles.length; k++){
+            $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  +articles[k].pubDate+  '</i></dd>');
+        }
+
+
+    
+}
 
 
 //on page load NBA articles are shown
 window.onload = addArticles(sites["nba"]);
-
-
 
 
 //when dropdown changes the articles change
@@ -91,4 +107,3 @@ document.getElementById("teams").onchange = function() {
     $(".list").empty();
     addArticles(sites[this.value]);
 };
-
