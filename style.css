@@ -8,12 +8,39 @@
 h1 {
 	color:darkblue;
 	text-align: center;
-	font-family: 'Arial Rounded MT Bold', 'Helvetica Rounded', Arial, sans-serif;
-	font-size: 35px;
-	font-style: normal;
+	font-family: Verdana, Geneva, sans-serif;
+	font-size: 50px;
 	font-variant: small-caps;
-	font-weight: 500;
-	line-height: 15px;
+	font-weight: 100;
+	line-height: 5px;
+}
+
+.float-left{
+	float: left;
+	width: 20%;
+
+}
+a.pages:link{
+	color: #000066;
+	text-decoration: none;
+	font-size: 21px;
+	font-family: Verdana, Geneva, sans-serif;
+}
+a.pages:visited{
+	color: #000066;
+	text-decoration: none;
+	font-size: 21px;
+}
+a.pages:hover{
+	color: #006600;
+	text-decoration: none;
+	font-size: 21px;
+}
+a.pages:active{
+	color: #006600;
+	font-weight: bold;
+	text-decoration: none;
+	font-size: 21px;
 }
 /*.center {
     margin-left: auto;
