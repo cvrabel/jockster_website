@@ -96,7 +96,6 @@ function displayArticles(){
 //on page load NBA articles are shown
 window.onload = addArticles(sites["nba"]);
 
-
 //when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
     tempLength = 0;
@@ -104,4 +103,8 @@ document.getElementById("teams").onchange = function() {
     articles = [];
     $(".list").empty();
     addArticles(sites[this.value]);
+    var logo = this.value + '_logo';
+    document.body.style.backgroundImage = 'url(' + this.value + '_logo)';
+
+
 };
