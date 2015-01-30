@@ -18,7 +18,7 @@ body{
 	background-position: right bottom;
 	background-repeat: no-repeat;
 	background-attachment: fixed;
-	background-size: 135px 115px;
+	background-size: 75px 55px;
 }
 
 .options{
@@ -107,6 +107,7 @@ ul li:hover ul {
   opacity: 1;
   visibility: visible;
 }
+
 
 /* SLIDE THREE 
 .slideThree {

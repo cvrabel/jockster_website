@@ -1,35 +1,49 @@
 <!DOCTYPE html>
 <html>
 <head>
+
+	<link href='http://fonts.googleapis.com/css?family=Audiowide&subset=latin,latin-ext' rel='stylesheet' type='text/css'>
+
 	<meta content="text/html;charset=utf-8" http-equiv="Content-Type">
 	<meta content="utf-8" http-equiv="encoding">
 	<title>Jockster</title>
 	<link rel="shortcut icon" type="image/x-icon" href="jordan.png" />
 	<h1>NFL Jockster</h1>
 	<link href='style.css' rel='stylesheet'>
-	
-</head>
-	
-<div>
-	<div align = "center" class = "float-left">
-		<a href = "main.html" class = "pages" target="_self">HOME</a>
-	</div>
-	<div align = "center" class = "float-left">
-		<a href = "nfl_main.html" class = "pages" target="_self">NFL</a>
-	</div>
-	<div align = "center" class = "float-left">
-		<a href = "nba_main.html" class = "pages" target="_self">NBA</a>
-	</div>
-	<div align = "center" class = "float-left">
-		<a href = "mlb_main.html" class = "pages" target="_self">MLB</a>
-	</div>
-	<div align = "center" class = "float-left">
-		<a href = "nhl_main.html" class = "pages" target="_self">NHL</a>
-	</div>
+
+
+
+<div class = "menu_ribbon">
+<ul>
+  <li><a href = "main.html" class = "pages" target="_self" style = "color: black">HOME</a></li>
+  <li><a href = "nfl_main.html" class = "pages" target="_self" style = "color: darkblue">NFL</a></li>
+  <li><a href = "nba_main.html" class = "pages" target="_self" style = "color: black">NBA</a></li>
+  <li><a href = "nhl_main.html" class = "pages" target="_self" style = "color: black">NHL</a></li>
+  <li><a href = "mlb_main.html" class = "pages" target="_self" style = "color: black">MLB</a></li>
+  <li>NCAA Football</li>
+  <li>NCAA Basketball</li>
+  <li><a href = "soccer_main.html" class = "pages" target="_self" style = "color: black">Soccer</a></li>
+  <li>Tennis</li>
+  <li>Golf</li>
+  <li>X Games</li>
+  <li>Olympics</li>
+  <li>
+    Other Sports
+    <ul>
+      <li>Cricket</li>
+      <li>Rugby</li>
+      <li>Formula 1</li>
+      <li>NASCAR</li>
+    </ul>
+  </li>
+</ul>
 </div>
+</head>
 
 
-<body>
+<body background = "nba_logo">
+
+
 	<!--
 	<div class = "center">
 	<button onclick = "addTeam()">Add Articles</button>
@@ -37,7 +51,7 @@
 	
 	
 	<select id = "teams">
-		<option value = "nba">NBA News</option>
+		<option value = "nba">NFL News</option>
 		<option value = "hawks">Atlanta Hawks</option>
 		<option value = "celtics">Boston Celtics</option>
 		<option value = "nets">Brooklyn Nets</option>
@@ -72,7 +86,7 @@
 	
 
 	<!-- Slider -->
-	<input type="checkbox" value="None" id="slideThree" name="check">Subscribe</body>
+	<label><input type="checkbox" value="None" class="subscribe" name="check">Subscribe<label>
 	
 	
 
@@ -81,9 +95,7 @@
     <script src="nba_script.js" type ="text/javascript"></script>
     
 
-    <dl class = "list">
-    
-    </dl>
+    <dl class = "list"></dl>
 
 </body>
 </html>

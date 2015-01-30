@@ -1,4 +1,4 @@
-var sites = {"nba" : ["http://grantland.com/tags/nba/feed/", "http://api.foxsports.com/v1/rss?partnerKey=zBaFxRyGKCfxBagJG9b8pqLyndmvo7UU&tag=nba", "http://probasketballtalk.nbcsports.com/feed/", "http://nba.com/rss/nba_rss.xml", "http://www.si.com/rss/si_nba.rss", "http://sports.espn.go.com/espn/rss/nba/news", "https://sports.yahoo.com/nba/rss.xml", "http://dimemag.com/feed/", "http://www.cbssports.com/partners/feeds/rss/nba_news", "http://basketball.realgm.com/rss/wiretap/0/0.xml"],
+var sites = {"soccer" : ["http://www.worldsoccer.com/feed", "http://www.theguardian.com/football/rss", "http://sports.yahoo.com/soccer//rss.xml", "http://grantland.com/tags/soccer/feed/", "http://www.goal.com/en-us/feeds/news?fmt=rss&ICID=HP", "http://www.espnfc.com/rss", "http://feeds.bbci.co.uk/sport/0/football/rss.xml?edition=uk"],
              "hawks" : ["http://www.nba.com/hawks/rss.xml", "http://www.peachtreehoops.com/rss/current"],
             "celtics" : ["http://www.nba.com/celtics/rss.xml", "http://www.celticsblog.com/rss/current"],
             "nets" : ["http://www.nba.com/nets/rss.xml", "http://www.netsdaily.com/rss/current"],
@@ -110,7 +110,7 @@ function displayArticles(){
 
 
 //on page load NBA articles are shown
-window.onload = addArticles(sites["nba"]);
+window.onload = addArticles(sites["soccer"]);
 
 //when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
