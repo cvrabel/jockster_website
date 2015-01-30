@@ -108,3 +108,22 @@ document.getElementById("teams").onchange = function() {
 
 
 };
+
+//fix ribbon at top of screen
+
+var fixmeTop = $('.menu_ribbon').offset().top;
+$(window).scroll(function() {
+    var currentScroll = $(window).scrollTop();
+    if (currentScroll >= fixmeTop) {
+        $('.menu_ribbon').css({
+            position: 'fixed',
+            top: '0',
+            left: '0',
+            width: '100%'
+        });
+    } else {
+        $('.menu_ribbon').css({
+            position: 'static'
+        });
+    }
+});

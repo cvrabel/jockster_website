@@ -8,11 +8,11 @@
 h1 {
 	color:black;
 	text-align: center;
-	font-family: Verdana, Geneva, sans-serif;
-	font-size: 60px;
+	font-family: 'Audiowide';
 	font-variant: small-caps;
-	font-weight: bold;
-	line-height: 5px;
+	font-size: 50px;
+	line-height: 10px;
+	font-weight: 5px;
 }
 body{
 	background-position: right bottom;
@@ -20,6 +20,7 @@ body{
 	background-attachment: fixed;
 	background-size: 135px 115px;
 }
+
 .options{
 	float:left;
 }
@@ -29,10 +30,14 @@ body{
 	padding-bottom: 10px;
 
 }
-#menu_ribbon{
+
+.menu_ribbon{
 	margin-right: auto;
 	margin-left: auto;
-	width: 60%;
+	width: 100%;
+	text-align: center;
+	background: white;
+	padding-bottom: 5px;
 }
 
 /* unvisited link */
@@ -54,7 +59,7 @@ ul li {
   display: inline-block;
   margin-right: -4px;
   position: relative;
-  padding: 15px 20px;
+  padding: 15px 22px;
   background: #fff;
   cursor: pointer;
   -webkit-transition: all 0.2s;
