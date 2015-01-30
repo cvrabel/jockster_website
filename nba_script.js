@@ -99,7 +99,7 @@ function displayArticles(){
         else{
             minutes = minutes + 'am';
         }
-        var months = Array("January", "February", "March", "April", "May", "June", "July", "August", "September", "October", "November", "December");
+        var months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
         var pubString = hours + ":" + minutes + " " + months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
 
 
