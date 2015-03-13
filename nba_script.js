@@ -43,7 +43,6 @@ function addArticles(urls){
           url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
           dataType : 'jsonp',
           success  : function (data) {
-              //$("ol").append('<h4>NBA.com</h4>');
             
               $.each(data.responseData.feed.entries, function (i, e) {
                 
@@ -112,6 +111,7 @@ function displayArticles(){
 //on page load NBA articles are shown
 window.onload = addArticles(sites["nba"]);
 
+
 //when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
     tempLength = 0;
@@ -125,8 +125,8 @@ document.getElementById("teams").onchange = function() {
 
 };
 
-//fix ribbon at top of screen
 
+//fix ribbon at top of screen
 var fixmeTop = $('.menu_ribbon').offset().top;
 $(window).scroll(function() {
     var currentScroll = $(window).scrollTop();
