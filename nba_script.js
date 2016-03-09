@@ -1,3 +1,90 @@
+//Javascript file for NBA page
+// var tempLength = 0;
+var counter = 0;
+var articles = [];
+
+//function to parse url pages and then display them
+function addArticles(urls){
+    var promises = []; //Needed to know if all requests have been made
+    //Loop through all urls for this sections
+    for(var x in urls){
+        var request = $.ajax({  
+          url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
+          dataType : 'jsonp',
+          success  : function (data) {
+            
+              $.each(data.responseData.feed.entries, function (i, e) {
+                
+                // console.log("------------------------");
+                // console.log("title      : " + e.title);
+                // console.log("link       : " + e.link);
+                // console.log("pubDate    : " + Date.parse(e.publishedDate));
+                // console.log("description: " + e.contentSnippet);
+                if(e.link.indexOf("chinese") == -1 && e.link.indexOf("china") == -1 
+                                                    && e.link.indexOf("espanol") == -1){
+                    articles.push({"websiteName": data.responseData.feed.title, 
+                                    "title":e.title, 
+                                    "link":e.link, 
+                                    "pubDate":e.publishedDate});
+                    counter++;
+                }
+                // console.log(articles.length);
+              });
+              
+                      
+          },
+        });
+        promises.push(request);
+    }  
+   $.when.apply(null, promises).done(function(){
+        //Done so that the articles are displayed only once all requests are made
+       displayArticles();
+  })
+}
+
+//Parse through the articles, and get relevant information
+function displayArticles(){
+    //insertion sort by date here
+      for(var x = 0; x <articles.length; x++){
+        for(var y = x; y > 0; y--){
+            if(Date.parse(articles[y].pubDate) > Date.parse(articles[y-1].pubDate)){
+                var temp = articles[y];
+                articles[y] = articles[y-1];
+                articles[y-1] = temp;
+            }
+        }
+      }
+    console.log("THIS IS THE NUMBER OF ARTICLES : " + articles.length);
+      //Loop through articles, get information, add to feed
+    for(var k = 0; k<articles.length; k++){
+        var date = new Date(articles[k].pubDate);
+        var minutes = date.getMinutes();
+        
+        if(minutes < 10)
+            minutes = '0'+minutes;
+        var hours = date.getHours();
+        if(hours > 12){
+            hours = hours-12;
+            minutes = minutes + 'pm';
+        }
+        else{
+            minutes = minutes + 'am';
+        }
+
+        //Get correct time,date
+        var months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
+        var pubString = hours + ":" + minutes + " " + months[date.getMonth()] + " " 
+                + date.getDate() + ", " + date.getFullYear();
+
+        //Add to feed the article link, title etc.
+        $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  
+            +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  
+            + articles[k].websiteName + ' - ' + pubString +  '</i></dd>');
+    }
+    
+}
+
+//Map for relevant sites
 var sites = {"nba" : ["http://grantland.com/tags/nba/feed/", "http://api.foxsports.com/v1/rss?partnerKey=zBaFxRyGKCfxBagJG9b8pqLyndmvo7UU&tag=nba", "http://probasketballtalk.nbcsports.com/feed/", "http://nba.com/rss/nba_rss.xml", "http://www.si.com/rss/si_nba.rss", "http://sports.espn.go.com/espn/rss/nba/news", "https://sports.yahoo.com/nba/rss.xml", "http://dimemag.com/feed/", "http://www.cbssports.com/partners/feeds/rss/nba_news", "http://basketball.realgm.com/rss/wiretap/0/0.xml"],
              "hawks" : ["http://www.nba.com/hawks/rss.xml", "http://www.peachtreehoops.com/rss/current"],
             "celtics" : ["http://www.nba.com/celtics/rss.xml", "http://www.celticsblog.com/rss/current"],
@@ -32,94 +119,19 @@ var sites = {"nba" : ["http://grantland.com/tags/nba/feed/", "http://api.foxspor
             };
 
 
-var tempLength = 0;
-var counter = 0;
-var articles = [];
-//function to parse url pages and then display them
-function addArticles(urls){
-      var promises = [];
-    for(var x in urls){
-        var request = $.ajax({  
-          url      : 'https://ajax.googleapis.com/ajax/services/feed/load?v=1.0&num=10&callback=?&q=' + encodeURIComponent(urls[x]),
-          dataType : 'jsonp',
-          success  : function (data) {
-            
-              $.each(data.responseData.feed.entries, function (i, e) {
-                
-                console.log("------------------------");
-                console.log("title      : " + e.title);
-                console.log("link       : " + e.link);
-                console.log("pubDate    : " + Date.parse(e.publishedDate));
-                console.log("description: " + e.contentSnippet);
-                if(e.link.indexOf("chinese") == -1 && e.link.indexOf("china") == -1 && e.link.indexOf("espanol") == -1){
-                    articles.push({"title":e.title, "link":e.link, "pubDate":e.publishedDate});
-                    counter++;
-                }
-                console.log(articles.length);
-              });
-              
-              //displaying the articles
-            
-                               
-          },
-        });
-        promises.push(request);
-    }  
-   $.when.apply(null, promises).done(function(){
-
-       displayArticles();
-  })
-}
-
-function displayArticles(){
-
-        //sort by date here
-          
-      for(var x = 0; x <articles.length; x++){
-        for(var y = x; y > 0; y--){
-            if(Date.parse(articles[y].pubDate) > Date.parse(articles[y-1].pubDate)){
-                var temp = articles[y];
-                articles[y] = articles[y-1];
-                articles[y-1] = temp;
-            }
-        }
-      }
-    console.log("THIS IS THE NUMBER OF ARTICLES : " + articles.length);
-    for(var k = 0; k<articles.length; k++){
-        var date = new Date(articles[k].pubDate);
-        var minutes = date.getMinutes();
-        if(minutes < 10)
-            minutes = '0'+minutes;
-        var hours = date.getHours();
-        if(hours > 12){
-            hours = hours-12;
-            minutes = minutes + 'pm';
-        }
-        else{
-            minutes = minutes + 'am';
-        }
-        var months = Array("Jan", "Feb", "Mar", "Apr", "May", "Jun", "Jul", "Aug", "Sep", "Oct", "Nov", "Dec");
-        var pubString = hours + ":" + minutes + " " + months[date.getMonth()] + " " + date.getDate() + ", " + date.getFullYear();
-
-
-        $(".list").append('<dt><a href="'  +articles[k].link+  '" target="_blank">'  +articles[k].title+  '</a></dt><dd><p style = "font-size:75%"><i>'  + pubString +  '</i></dd>');
-    }
-    
-}
-
-
 //on page load NBA articles are shown
 window.onload = addArticles(sites["nba"]);
 
 
 //when dropdown changes the articles change
 document.getElementById("teams").onchange = function() {
-    tempLength = 0;
+    // tempLength = 0;
     counter = 0;
     articles = [];
-    $(".list").empty();
-    addArticles(sites[this.value]);
-    var logo = this.value + '_logo';
+
+    $(".list").empty(); //Clear our feed
+    addArticles(sites[this.value]); 
+    var logo = this.value + '_logo'; //Change the logo for team/sport
     document.body.style.backgroundImage = 'url(' + this.value + '_logo)';
 
 
