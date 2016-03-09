@@ -42,7 +42,7 @@ function addArticles(urls){
   })
 }
 
-//Parse through the articles, and get relevant information
+//Parse through the articles, and get relevant information, and display
 function displayArticles(){
     //insertion sort by date here
       for(var x = 0; x <articles.length; x++){
@@ -59,7 +59,7 @@ function displayArticles(){
     for(var k = 0; k<articles.length; k++){
         var date = new Date(articles[k].pubDate);
         var minutes = date.getMinutes();
-        
+
         if(minutes < 10)
             minutes = '0'+minutes;
         var hours = date.getHours();
